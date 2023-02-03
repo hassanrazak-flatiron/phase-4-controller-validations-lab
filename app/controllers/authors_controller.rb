@@ -1,4 +1,5 @@
 class AuthorsController < ApplicationController
+
   
   def show
     author = Author.find(params[:id])
@@ -8,8 +9,13 @@ class AuthorsController < ApplicationController
 
   def create
     author = Author.create(author_params)
+    if author.valid?
+      render json: author, status: :created
+    else 
+      render json: {error: author.errors}
 
-    render json: author, status: :created
+    end
+
   end
 
   private
